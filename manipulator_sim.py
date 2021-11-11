@@ -52,4 +52,7 @@ plt.xlim([-3, 3])
 plt.ylim([-3, 3])
 ax.set_aspect('equal', adjustable='box')
 ani = animation.ArtistAnimation(fig, ims, interval=50)
+f = r"animation.gif" 
+writergif = animation.PillowWriter(fps=30) 
+ani.save(f, writer=writergif)
 plt.show()
