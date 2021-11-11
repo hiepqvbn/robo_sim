@@ -1,10 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+from math import sin,cos
 from manipulator1 import manipulator1
 import glb_
 
-T=20
-dispt = 1/24
+T=10
+dispt = 0.05
 duration=0
 
 tau=np.array(
@@ -14,7 +17,7 @@ tau=np.array(
     )
 q=np.array(
     [
-        [-1.4708], [0.2]
+        [-1.9708], [0.2]
     ]
 )
 qdot=np.array(
@@ -25,12 +28,12 @@ qdot=np.array(
 
 q_=[]
 
+# plt.figure(figsize=(1,1))
 fig = plt.figure()
-ax = plt.axes()
-x = np.linspace(0, 10, 1000)
-ax.plot(x, np.sin(x))
-plt.plot(x, np.sin(x))
+ax = fig.add_subplot(111)
 
+
+ims=[]
 
 for t in range(0,int(T/glb_.dt)):
     q_.append(q)
@@ -38,7 +41,15 @@ for t in range(0,int(T/glb_.dt)):
     q=q1
     qdot=q1d
     duration=duration+glb_.dt
-    if duration>0:
-
+    if duration>dispt:
+        im1=plt.plot([0,glb_.l1*cos(q[0][0])],[0,glb_.l1*sin(q[0][0])],'ro-')
+        im2=plt.plot([glb_.l1*cos(q[0][0]),glb_.l1*cos(q[0][0]) + glb_.l2*cos(q[0][0] + q[1][0])],[glb_.l1*sin(q[0][0]),glb_.l1*sin(q[0][0]) + glb_.l2*sin(q[0][0] + q[1][0])],'bo-')
+        ims.append(im1+im2)
         duration=0
 
+
+plt.xlim([-3, 3])
+plt.ylim([-3, 3])
+ax.set_aspect('equal', adjustable='box')
+ani = animation.ArtistAnimation(fig, ims, interval=50)
+plt.show()
