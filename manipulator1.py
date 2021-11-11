@@ -45,12 +45,11 @@ def manipulator1(q, qdot, tau):
     )
 
     qddot= np.matmul(np.linalg.inv(M),(tau-h-g))
-    print(qddot)
 
     newqdot=qdot+qddot*glb_.dt
-    print(newqdot)
+    # print(newqdot)
     newq=theta+thetadot*glb_.dt
-    print(newq)
+    # print(newq)
 
     return newq, newqdot
 
