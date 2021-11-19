@@ -1,5 +1,5 @@
 import numpy as np
-from math import cos, sin
+from math import cos, e, sin, sqrt
 import glb_
 from jacobi import Jacobi
 
@@ -62,6 +62,14 @@ def finger_pos(q):
         ]
     )
     return f_pos
+
+def in_range(goal):
+    l=goal-glb_.O
+    l_len=sqrt(l[0][0]**2+l[1][0]**2)
+    if l_len > glb_.l1+glb_.l2:
+        return False
+    else:
+        return True
 
 if __name__=="__main__":
     tau=np.array(

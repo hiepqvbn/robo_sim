@@ -23,7 +23,7 @@ def Tranjator(goal, start):
 
     xd.append(goal)
 
-    return xd
+    return xd, N
 
 if __name__=="__main__":
     

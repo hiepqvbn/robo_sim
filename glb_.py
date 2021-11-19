@@ -1,3 +1,5 @@
+import numpy as np
+
 dt=0.001
 
 ghat=9.8
@@ -11,4 +13,10 @@ m2=1.0
 I1=1.0
 I2=1.0
 
-del_l=0.1
+O=np.array(
+        [
+            [0], [0]
+        ]
+    )
+
+del_l=0.001
