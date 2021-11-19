@@ -25,6 +25,27 @@ def Tranjator(goal, start):
 
     return xd, N
 
+def Tranjator2(goal, start):
+    l=goal-start
+    l_tranj=sqrt(l[0][0]**2+l[1][0]**2)
+    a=(goal[1][0]-start[1][0])/(goal[0][0]-start[0][0])
+    b=goal[1][0]-a*goal[0][0]
+    alpha=atan2((goal[1][0]-start[1][0]),(goal[0][0]-start[0][0]))
+    
+    if(l_tranj>glb_.del_l):
+        x_d=np.array(
+            [
+                [start[0][0]+glb_.del_l*cos(alpha)],
+                [start[1][0]+glb_.del_l*sin(alpha)]
+            ]
+        )
+    else:
+        x_d=goal
+
+    return x_d
+
+
+
 if __name__=="__main__":
     
     q=np.array(

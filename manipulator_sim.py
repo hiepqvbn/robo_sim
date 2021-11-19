@@ -4,20 +4,35 @@ import matplotlib.animation as animation
 
 from math import sin,cos
 from jacobi import Jacobi
-from tranjactor import Tranjator
+from tranjactor import Tranjator, Tranjator2
 from manipulator1 import in_range, manipulator1, finger_pos
 from PID_controller import PID
 import glb_
 
-T=5
+T=15
 dispt = 0.05
 duration=0
 
-goal=np.array(
+goal1=np.array(
+    [
+        [1.5], [1.2]
+    ]
+)
+goal2=np.array(
     [
         [-1.5], [1.2]
     ]
 )
+goals=[]
+for i in range(0,int(T/glb_.dt)):
+    del_g= (goal2[0][0]-goal1[0][0])/int(T/glb_.dt)
+    g=np.array(
+        [
+            [1.5+del_g*i], [1.2]
+        ]
+    )
+    goals.append(g)
+goal=goals[0]
 
 if in_range(goal):
     print("OK")
@@ -85,11 +100,13 @@ for t in range(0,int(T/glb_.dt)):      #int(T/glb_.dt)
     qdot=q1d
     tau[0] = controller1.send([q[0], q_goal[0]])
     tau[1] = controller2.send([q[1], q_goal[1]])
+    # goal=goals[t]
     if t<N:
         x_d=xd[t]
     else:
         x_d=goal
     f_p=finger_pos(q)
+    # x_d=Tranjator2(goal, f_p)
     del_x=x_d-f_p
     del_theta=np.matmul(np.linalg.inv(Jacobi(q)), del_x)
     q_goal=q+del_theta
