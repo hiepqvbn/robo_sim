@@ -69,4 +69,5 @@ if __name__=="__main__":
             [0], [0]
         ]
     )
-    manipulator1(q,qdot,tau)
+    q1,q1d=manipulator1(q,qdot,tau)
+    print("q {} ".format(q1d))
