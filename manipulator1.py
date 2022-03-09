@@ -1,6 +1,7 @@
 import numpy as np
-from math import cos, sin
+from math import cos, e, sin, sqrt
 import glb_
+from jacobi import Jacobi
 
 def manipulator1(q, qdot, tau):
 
@@ -53,6 +54,23 @@ def manipulator1(q, qdot, tau):
 
     return newq, newqdot
 
+def finger_pos(q):
+    f_pos = np.array(
+        [
+            [glb_.l1*cos(q[0][0]) + glb_.l2*cos(q[0][0] + q[1][0])],
+            [glb_.l1*sin(q[0][0]) + glb_.l2*sin(q[0][0] + q[1][0])]
+        ]
+    )
+    return f_pos
+
+def in_range(goal):
+    l=goal-glb_.O
+    l_len=sqrt(l[0][0]**2+l[1][0]**2)
+    if l_len > glb_.l1+glb_.l2:
+        return False
+    else:
+        return True
+
 if __name__=="__main__":
     tau=np.array(
         [
@@ -69,5 +87,21 @@ if __name__=="__main__":
             [0], [0]
         ]
     )
+<<<<<<< HEAD
     q1,q1d=manipulator1(q,qdot,tau)
     print("q {} ".format(q1d))
+=======
+    goal=np.array(
+        [
+            [-2.0], [1.2]
+        ]
+    )
+    del_x=goal-finger_pos(q)
+    # q1,q1d=manipulator1(q,qdot,tau)
+    # print("q {} ".format(q1d))
+    f=finger_pos(q)
+    del_theta=np.matmul(np.linalg.inv(Jacobi(q)), del_x)
+    q_goal=q+del_theta
+    print("q {} ".format(q))
+    print("next q {} ".format(q_goal))
+>>>>>>> Jacobian
