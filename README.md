@@ -17,3 +17,9 @@ pip install matplotlib
 
 ## Usage
 
+run with goal's position (x,y) for (|x,y|<=3)
+```bash
+python3 .\manipulator_sim [goal_x] [goal_y]
+```
+the simulation gif file save is .\animation.gif
+
