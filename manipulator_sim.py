@@ -7,6 +7,7 @@ from jacobi import Jacobi
 from tranjactor import Tranjator, Tranjator2
 from manipulator1 import in_range, manipulator1, finger_pos
 from PID_controller import PID
+from sys import argv
 import glb_
 
 T=15
@@ -32,7 +33,13 @@ for i in range(0,int(T/glb_.dt)):
         ]
     )
     goals.append(g)
-goal=goals[0]
+# goal=goals[0]
+
+goal_x, goal_y = float(argv[1]), float(argv[2])
+# print(goal_x, goal_y)
+goal = np.array(
+    [[goal_x], [goal_y]]
+)
 
 if in_range(goal):
     print("OK")
